@@ -25,3 +25,14 @@ jobs:
 
       - name: Executar script
         run: python main.py
+
+      # --- PASSO QUE ESTAVA FALTANDO ---
+      - name: Salvar e Commitar as mudanças no repositório
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          # Adiciona o arquivo gerado pelo seu script (ajuste o nome se for diferente)
+          git add cotacao_dolar.csv 
+          # O "|| exit 0" evita que o GitHub dê erro caso a cotação seja exatamente igual e não haja mudanças
+          git commit -m "Atualização automática do dólar: $(date +'%Y-%m-%d')" || exit 0
+          git push
